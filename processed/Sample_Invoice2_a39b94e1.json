@@ -1,0 +1,134 @@
+{
+  "invoice_number": "FAC9TA2301307558",
+  "date": "2022-11-10",
+  "vendor": "Tech-Connect Retail Private Limited",
+  "total": "2371.92",
+  "line_items": [
+    {
+      "description": "Noise ColorFit Icon 2 1.8 Display, Bluetooth Calling, AI Voice Assistance Smartwatch Warranty: 1 Year Manufacturer Warranty",
+      "quantity": 1.0,
+      "unit_price": 1999.0,
+      "amount": 2358.82,
+      "item_type": "product",
+      "formatted_amount": "\u20b92358.82",
+      "formatted_quantity": "1"
+    },
+    {
+      "description": "Shipping And Handling Charges",
+      "quantity": 1.0,
+      "unit_price": 45.0,
+      "amount": 53.1,
+      "item_type": "shipping",
+      "formatted_amount": "\u20b953.10",
+      "formatted_quantity": "1"
+    }
+  ],
+  "processed_at": "2025-08-13T00:57:07.962066",
+  "extraction_method": "gemini_ai",
+  "structured_data": {
+    "extraction_metadata": {
+      "method": "gemini_ai",
+      "model": "gemini-2.0-flash",
+      "confidence_score": 0.9,
+      "processing_time": 8.054995059967041,
+      "fallback_used": false,
+      "extracted_at": "2025-08-13T00:57:07.962066",
+      "errors": []
+    },
+    "invoice_metadata": {
+      "invoice_number": "FAC9TA2301307558",
+      "invoice_date": "2022-11-10",
+      "due_date": null,
+      "po_number": "OD126231479263608000",
+      "currency": "INR",
+      "language": "en"
+    },
+    "vendor_details": {
+      "name": "Tech-Connect Retail Private Limited",
+      "address": {
+        "street": "J.L.No-9,55 and 8 ,Mouza-chandipur,Harinarayan chak ,Amraberia,District-Howrah",
+        "city": "uluberia, Howrah",
+        "state": "West Bengal",
+        "postal_code": "711316",
+        "country": "India"
+      },
+      "contact": {
+        "phone": "1800 208 9898",
+        "email": null,
+        "website": "www.flipkart.com/helpcentre"
+      },
+      "tax_id": "19AAICA4872D1ZL",
+      "registration_number": null
+    },
+    "customer_details": {
+      "name": "Jashwanth",
+      "address": {
+        "street": "4-91/2, Upparapelly.",
+        "city": "Warangal Rural District",
+        "state": "Telangana",
+        "postal_code": "506310",
+        "country": null
+      },
+      "contact": {
+        "phone": "xxxxxxxxxx",
+        "email": null,
+        "website": null
+      },
+      "customer_id": null
+    },
+    "line_items": [
+      {
+        "item_id": null,
+        "description": "Noise ColorFit Icon 2 1.8 Display, Bluetooth Calling, AI Voice Assistance Smartwatch Warranty: 1 Year Manufacturer Warranty",
+        "quantity": 1.0,
+        "unit_price": 1999.0,
+        "unit_type": null,
+        "subtotal": 1999.0,
+        "tax_rate": 0.18,
+        "tax_amount": 359.82,
+        "total": 2358.82,
+        "category": "product"
+      },
+      {
+        "item_id": null,
+        "description": "Shipping And Handling Charges",
+        "quantity": 1.0,
+        "unit_price": 45.0,
+        "unit_type": null,
+        "subtotal": 45.0,
+        "tax_rate": 0.18,
+        "tax_amount": 8.1,
+        "total": 53.1,
+        "category": "shipping"
+      }
+    ],
+    "summary": {
+      "subtotal": 2044.0,
+      "tax_breakdown": [],
+      "total_tax": 367.92,
+      "discounts": 40.0,
+      "shipping": 0.0,
+      "grand_total": 2371.92
+    },
+    "payment_terms": {
+      "terms": "At Flipkart we try to deliver perfectly each and every time. But in the off-chance that you need to return the item, please do so with the Returns Policy original Brand box/price \n without which it will be really difficult for us to act on your request. Please help us in helping you. Terms and conditions apply.",
+      "payment_methods": [],
+      "bank_details": {
+        "account_name": null,
+        "account_number": null,
+        "routing_number": null,
+        "iban": null,
+        "swift_code": null
+      }
+    },
+    "additional_info": {
+      "notes": "The goods sold as are intended for end user consumption and not for re-sale.",
+      "terms_conditions": null,
+      "reference_numbers": []
+    }
+  },
+  "raw_text": "E. & O.E. page 1 of 1\n*Keep this invoice and \nmanufacturer box for \nwarranty purposes.Ship To\nJashwanth \n4-91/2, Upparapelly.\nWarangal Rural District 506310 \nTelangana \nPhone: xxxxxxxxxx Bill To\nJashwanth \n4-91/2, Upparapelly.\nWarangal Rural District 506310 \nTelangana \nPhone: xxxxxxxxxx Order ID: OD126231479263608000\n 11-10-2022 Order Date:\n 25-10-2022 Invoice Date:\n Original Invoice Number:\nFAC9TA2301307558\n sales_return Reason Of Issuance:Credit Note Number # RACP1E2300511809Credit Note\nSold By:  Tech-Connect Retail Private Limited ,\nShip-from Address:  J.L.No-9,55 and 8 ,Mouza-chandipur,Harinarayan chak ,Amraberia,District-Howrah ,West Bengal, uluberia, \nHowrah, West Bengal, India - 711316,\nGSTIN  - 19AAICA4872D1ZL\nTotal items: 1\nProduct Title Qty Gross\nAmount \u20b9Discounts\n/Coupons \u20b9Taxable\nValue \u20b9IGST \u20b9 Total \u20b9\nWith Call Function\nFSN: \nSMWGEH7VGYMGCP3V\nHSN/SAC: 85176290Noise ColorFit Icon 2 1.8 \nDisplay, Bluetooth Calling, \nAI Voice Assistance \nSmartwatch\nWarranty: 1 Year Manufacturer Warranty\n 18.000 % IGST:1 1999.00 0.00 1694.07 304.93 1999.00\nShipping And Handling Charges 1 45.00 -40.00 4.24 0.76 5.00\nTotal 1 2044.00 -40.00 1698.31 305.69 2004.00\nGrand Total \u20b9 2004.00\nTech-Connect Retail Private Limited\nSignature\nAuthorized Signatory\n: At Flipkart we try to deliver perfectly each and every time. But in the off-chance that you need to return the item, please do so with the Returns Policy original Brand box/price \n without which it will be really difficult for us to act on your request. Please help us in helping you. Terms and conditions apply. tag, original packing and invoice\nThe goods sold as are intended for end user consumption and not for re-sale.\nRegd. office:  , Rectangle No. 06, Rectangle No. 07, Rectangle No. 08 and Rectangle No. 13, Village- Khalikpur, Tehsil- Badli, District- Jhajjar,FC- Tech-Connect Retail Private Limited\nFarrukhnagar, Jhajjar, Haryana - 124103\nContact Flipkart: 1800 208 9898 || www.flipkart.com/helpcentreE. & O.E. page 1 of 1\n*Keep this invoice and \nmanufacturer box for \nwarranty purposes.Ship To\nJashwanth \n4-91/2, Upparapelly.\nWarangal Rural District 506310 \nTelangana \nPhone: xxxxxxxxxx Bill To\nJashwanth \n4-91/2, Upparapelly.\nWarangal Rural District 506310 \nTelangana \nPhone: xxxxxxxxxx Order ID: OD126231479263608000\n 11-10-2022 Order Date:\n 05-11-2022 Invoice Date:\n AAICA4872D PAN:\n U52100DL2010PTC202600 CIN:\nInvoice Number # FAETLP2302751567Tax Invoice\nSold By:  Tech-Connect Retail Private Limited ,\nShip-from Address:  Marasandra and Madnahatti -Venkatapura Villages, Kasaba Hobli, Malur Taluk ,Dist -Kolar, Malur, Bangalore, \nKarnataka, India - 563130, IN-KA\nGSTIN  - 29AAICA4872D1ZK\nTotal items: 1\nProduct Title Qty Gross\nAmount \u20b9Discounts\n/Coupons \u20b9Taxable\nValue \u20b9IGST \u20b9 Total \u20b9\nWith Call Function\nFSN: \nSMWGEH7VGYMGCP3V\nHSN/SAC: 85176290Noise ColorFit Icon 2 1.8 \nDisplay, Bluetooth Calling, \nAI Voice Assistance \nSmartwatch\nWarranty: 1 Year Manufacturer Warranty\n 18.0 % IGST:1 1999.00 0.00 1694.07 304.93 1999.00\nShipping And Handling Charges 1 45.00 -40.00 4.24 0.76 5.00\nTotal 1 2044.00 -40.00 1698.31 305.69 2004.00\nGrand Total \u20b9 2004.00\nTech-Connect Retail Private Limited\nSignature\nAuthorized Signatory\n: At Flipkart we try to deliver perfectly each and every time. But in the off-chance that you need to return the item, please do so with the Returns Policy original Brand box/price \n without which it will be really difficult for us to act on your request. Please help us in helping you. Terms and conditions apply. tag, original packing and invoice\nThe goods sold as are intended for end user consumption and not for re-sale.\nRegd. office:  , Rectangle No. 06, Rectangle No. 07, Rectangle No. 08 and Rectangle No. 13, Village- Khalikpur, Tehsil- Badli, District- Jhajjar,FC- Tech-Connect Retail Private Limited\nFarrukhnagar, Jhajjar, Haryana - 124103\nContact Flipkart: 1800 208 9898 || www.flipkart.com/helpcentreE. & O.E. page 1 of 1\n*Keep this invoice and \nmanufacturer box for \nwarranty purposes.Ship To\nJashwanth \n4-91/2, Upparapelly.\nWarangal Rural District 506310 \nTelangana \nPhone: xxxxxxxxxx Bill To\nJashwanth \n4-91/2, Upparapelly.\nWarangal Rural District 506310 \nTelangana \nPhone: xxxxxxxxxx Order ID: OD126231479263608000\n 11-10-2022 Order Date:\n 11-10-2022 Invoice Date:\n AAICA4872D PAN:\n U52100DL2010PTC202600 CIN:\nInvoice Number # FAC9TA2301307558Tax Invoice\nSold By:  Tech-Connect Retail Private Limited ,\nShip-from Address:  J.L.No-9,55 and 8 ,Mouza-chandipur,Harinarayan chak ,Amraberia,District-Howrah ,West Bengal, uluberia, Howrah, \nWest Bengal, India - 711316, IN-WB\nGSTIN  - 19AAICA4872D1ZL\nTotal items: 1\nProduct Title Qty Gross\nAmount \u20b9Discounts\n/Coupons \u20b9Taxable\nValue \u20b9IGST \u20b9 Total \u20b9\nWith Call Function\nFSN: \nSMWGEH7VGYMGCP3V\nHSN/SAC: 85176290Noise ColorFit Icon 2 1.8 \nDisplay, Bluetooth Calling, \nAI Voice Assistance \nSmartwatch\nWarranty: 1 Year Manufacturer Warranty\n 18.0 % IGST:1 1999.00 0.00 1694.07 304.93 1999.00\nShipping And Handling Charges 1 45.00 -40.00 4.24 0.76 5.00\nTotal 1 2044.00 -40.00 1698.31 305.69 2004.00\nGrand Total \u20b9 2004.00\nTech-Connect Retail Private Limited\nSignature\nAuthorized Signatory\n: At Flipkart we try to deliver perfectly each and every time. But in the off-chance that you need to return the item, please do so with the Returns Policy original Brand box/price \n without which it will be really difficult for us to act on your request. Please help us in helping you. Terms and conditions apply. tag, original packing and invoice\nThe goods sold as are intended for end user consumption and not for re-sale.\nRegd. office:  , Rectangle No. 06, Rectangle No. 07, Rectangle No. 08 and Rectangle No. 13, Village- Khalikpur, Tehsil- Badli, District- Jhajjar,FC- Tech-Connect Retail Private Limited\nFarrukhnagar, Jhajjar, Haryana - 124103\nContact Flipkart: 1800 208 9898 || www.flipkart.com/helpcentreE. & O.E. page 1 of 1\n*Keep this invoice and \nmanufacturer box for \nwarranty purposes.Ship To\nJashwanth \n4-91/2, Upparapelly.\nWarangal Rural District 506310 \nTelangana \nPhone: xxxxxxxxxx Bill To\nJashwanth \n4-91/2, Upparapelly.\nWarangal Rural District 506310 \nTelangana \nPhone: xxxxxxxxxx Order ID: OD126231479263608000\n 11-10-2022 Order Date:\n 12-11-2022 Invoice Date:\n Original Invoice Number:\nFAETLP2302751567\n sales_return Reason Of Issuance:Credit Note Number # RAD3MI2300989227Credit Note\nSold By:  Tech-Connect Retail Private Limited ,\nShip-from Address:  Marasandra and Madnahatti -Venkatapura Villages, Kasaba Hobli, Malur Taluk ,Dist -Kolar, Malur, \nBangalore, Karnataka, India - 563130,\nGSTIN  - 29AAICA4872D1ZK\nTotal items: 1\nProduct Title Qty Gross\nAmount \u20b9Discounts\n/Coupons \u20b9Taxable\nValue \u20b9IGST \u20b9 Total \u20b9\nWith Call Function\nFSN: \nSMWGEH7VGYMGCP3V\nHSN/SAC: 85176290Noise ColorFit Icon 2 1.8 \nDisplay, Bluetooth Calling, \nAI Voice Assistance \nSmartwatch\nWarranty: 1 Year Manufacturer Warranty\n 18.000 % IGST:1 1999.00 0.00 1694.07 304.93 1999.00\nShipping And Handling Charges 1 45.00 -40.00 4.24 0.76 5.00\nTotal 1 2044.00 -40.00 1698.31 305.69 2004.00\nGrand Total \u20b9 2004.00\nTech-Connect Retail Private Limited\nSignature\nAuthorized Signatory\n: At Flipkart we try to deliver perfectly each and every time. But in the off-chance that you need to return the item, please do so with the Returns Policy original Brand box/price \n without which it will be really difficult for us to act on your request. Please help us in helping you. Terms and conditions apply. tag, original packing and invoice\nThe goods sold as are intended for end user consumption and not for re-sale.\nRegd. office:  , Rectangle No. 06, Rectangle No. 07, Rectangle No. 08 and Rectangle No. 13, Village- Khalikpur, Tehsil- Badli, District- Jhajjar,FC- Tech-Connect Retail Private Limited\nFarrukhnagar, Jhajjar, Haryana - 124103\nContact Flipkart: 1800 208 9898 || www.flipkart.com/helpcentre",
+  "original_filename": "Sample_Invoice2.pdf",
+  "file_path": "Sample_Invoice2_f4ef4482.pdf",
+  "processed_filename": "Sample_Invoice2_a39b94e1.json"
+}

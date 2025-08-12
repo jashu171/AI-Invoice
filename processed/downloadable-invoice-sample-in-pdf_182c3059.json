@@ -1,0 +1,197 @@
+{
+  "invoice_number": "no",
+  "date": "2022-04-30",
+  "vendor": "we om no toc a a\nellington wood deco",
+  "total": "600.0",
+  "line_items": [
+    {
+      "description": "Sample service",
+      "quantity": 1.0,
+      "unit_price": 400.0,
+      "amount": 400.0,
+      "item_type": "product",
+      "formatted_amount": "\u20b9400.00",
+      "formatted_quantity": "1"
+    },
+    {
+      "description": "Sample service 1",
+      "quantity": 1.0,
+      "unit_price": 200.0,
+      "amount": 200.0,
+      "item_type": "product",
+      "formatted_amount": "\u20b9200.00",
+      "formatted_quantity": "1"
+    },
+    {
+      "description": "Your client Invoice No.:",
+      "quantity": 1,
+      "unit_price": null,
+      "amount": 0.0,
+      "item_type": "other",
+      "formatted_amount": "\u20b90.00",
+      "formatted_quantity": "1"
+    },
+    {
+      "description": "United Kingdom Reference:",
+      "quantity": 1,
+      "unit_price": null,
+      "amount": 0.0,
+      "item_type": "other",
+      "formatted_amount": "\u20b90.00",
+      "formatted_quantity": "1"
+    },
+    {
+      "description": "Sample wood decoration service",
+      "quantity": 1,
+      "unit_price": null,
+      "amount": 0.0,
+      "item_type": "other",
+      "formatted_amount": "\u20b90.00",
+      "formatted_quantity": "1"
+    }
+  ],
+  "processed_at": "2025-08-13T00:11:10.231649",
+  "extraction_method": "regex_fallback",
+  "structured_data": {
+    "extraction_metadata": {
+      "method": "regex_fallback",
+      "model": null,
+      "confidence_score": null,
+      "processing_time": null,
+      "fallback_used": true,
+      "extracted_at": "2025-08-13T00:11:10.231649",
+      "errors": []
+    },
+    "invoice_metadata": {
+      "invoice_number": "no",
+      "invoice_date": "2022-04-30",
+      "due_date": null,
+      "po_number": null,
+      "currency": "USD",
+      "language": "en"
+    },
+    "vendor_details": {
+      "name": "we om no toc a a\nellington wood deco",
+      "address": {
+        "street": null,
+        "city": null,
+        "state": null,
+        "postal_code": null,
+        "country": null
+      },
+      "contact": {
+        "phone": null,
+        "email": null,
+        "website": null
+      },
+      "tax_id": null,
+      "registration_number": null
+    },
+    "customer_details": {
+      "name": null,
+      "address": {
+        "street": null,
+        "city": null,
+        "state": null,
+        "postal_code": null,
+        "country": null
+      },
+      "contact": {
+        "phone": null,
+        "email": null,
+        "website": null
+      },
+      "customer_id": null
+    },
+    "line_items": [
+      {
+        "item_id": null,
+        "description": "Sample service",
+        "quantity": 1.0,
+        "unit_price": 400.0,
+        "unit_type": null,
+        "subtotal": 400.0,
+        "tax_rate": 0.0,
+        "tax_amount": 0.0,
+        "total": 400.0,
+        "category": "product"
+      },
+      {
+        "item_id": null,
+        "description": "Sample service 1",
+        "quantity": 1.0,
+        "unit_price": 200.0,
+        "unit_type": null,
+        "subtotal": 200.0,
+        "tax_rate": 0.0,
+        "tax_amount": 0.0,
+        "total": 200.0,
+        "category": "product"
+      },
+      {
+        "item_id": null,
+        "description": "Your client Invoice No.:",
+        "quantity": 1,
+        "unit_price": null,
+        "unit_type": null,
+        "subtotal": 0.0,
+        "tax_rate": 0.0,
+        "tax_amount": 0.0,
+        "total": 0.0,
+        "category": "other"
+      },
+      {
+        "item_id": null,
+        "description": "United Kingdom Reference:",
+        "quantity": 1,
+        "unit_price": null,
+        "unit_type": null,
+        "subtotal": 0.0,
+        "tax_rate": 0.0,
+        "tax_amount": 0.0,
+        "total": 0.0,
+        "category": "other"
+      },
+      {
+        "item_id": null,
+        "description": "Sample wood decoration service",
+        "quantity": 1,
+        "unit_price": null,
+        "unit_type": null,
+        "subtotal": 0.0,
+        "tax_rate": 0.0,
+        "tax_amount": 0.0,
+        "total": 0.0,
+        "category": "other"
+      }
+    ],
+    "summary": {
+      "subtotal": 600.0,
+      "tax_breakdown": [],
+      "total_tax": 0.0,
+      "discounts": 0.0,
+      "shipping": 0.0,
+      "grand_total": 600.0
+    },
+    "payment_terms": {
+      "terms": null,
+      "payment_methods": [],
+      "bank_details": {
+        "account_name": null,
+        "account_number": null,
+        "routing_number": null,
+        "iban": null,
+        "swift_code": null
+      }
+    },
+    "additional_info": {
+      "notes": null,
+      "terms_conditions": null,
+      "reference_numbers": []
+    }
+  },
+  "raw_text": "we Om no TOC a a\nEllington Wood Decor, 36 Terrick Ra, Elington PE18 2NT, United Kingdom\nBILL TO\nYour client Invoice No.: 042022\n11 Beech Dr Issue date: 30/04/2022\nEllington Due date: 14/05/2022\nNE61 5EU\nUnited Kingdom Reference: 042022\nDESCRIPTION QUANTITY UNIT PRICE (\u00a3) AMOUNT (\u00a3)\nSample service 1 400.00 400.00\nSample wood decoration service\nSample service 1 1 200.00 200.00\nSample wood decoration service 1\nTOTAL (GBP): \u00a3600.00\nTOTAL DUE {GBP) \u00a3600.00\nIssued by, signature:\nELiinaton Wood Decor\n\\\nEllington Wood Decor, 36 Terrick Rd, Ellington PE18 2NT, United Kingdom Email: email@yourbusinessname.co.uk ps\n",
+  "original_filename": "downloadable-invoice-sample-in-pdf.png",
+  "file_path": "downloadable-invoice-sample-in-pdf_dbd355bb.png",
+  "processed_filename": "downloadable-invoice-sample-in-pdf_182c3059.json"
+}

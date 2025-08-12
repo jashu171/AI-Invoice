@@ -1,0 +1,499 @@
+{% extends "base.html" %}
+
+{% block page_title %}Invoice Details: {{ invoice.invoice_number or 'N/A' }}{% endblock %}
+
+{% block content %}
+<div class="invoice-detail-layout">
+    <!-- Main Invoice Details -->
+    <div class="invoice-detail-main">
+        <div class="invoice-header">
+            <div class="header-actions">
+                <a href="{{ url_for('index') }}" class="btn btn-outline">
+                    <i class="fas fa-arrow-left"></i> Back to Dashboard
+                </a>
+                <button class="btn btn-primary" onclick="pushToAccounting('{{ invoice.id }}')">
+                    <i class="fas fa-paper-plane"></i> Push to Accounting
+                </button>
+            </div>
+        </div>
+
+        <div class="invoice-summary">
+            <div class="summary-card">
+                <h2>Invoice Summary</h2>
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <label>Invoice Number</label>
+                        <span class="value">{{ invoice.invoice_number or 'Not Found' }}</span>
+                    </div>
+                    <div class="summary-item">
+                        <label>Date</label>
+                        <span class="value">{{ invoice.date or 'Not Found' }}</span>
+                    </div>
+                    <div class="summary-item">
+                        <label>Vendor</label>
+                        <span class="value">{{ invoice.vendor or 'Not Found' }}</span>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="invoice-details-section">
+            <h3>Invoice Details</h3>
+            <div class="details-grid">
+                <div class="detail-card">
+                    <label>Product Name</label>
+                    <span class="value">{{ invoice.product_name or 'Not Found' }}</span>
+                </div>
+                <div class="detail-card">
+                    <label>Sold By</label>
+                    <span class="value">{{ invoice.vendor or 'Not Found' }}</span>
+                </div>
+                <div class="detail-card">
+                    <label>Amount</label>
+                    <span class="value">₹{{ invoice.total or '0.00' }}</span>
+                </div>
+                <div class="detail-card">
+                    <label>Tax</label>
+                    <span class="value">{{ invoice.tax or 'Not Found' }}</span>
+                </div>
+                <div class="detail-card">
+                    <label>Address</label>
+                    <span class="value">{{ invoice.address or 'Not Found' }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="raw-text-section">
+            <h3>Extracted Text</h3>
+            <div class="raw-text-container">
+                <pre>{{ invoice.raw_text }}</pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="invoice-detail-sidebar">
+        <div class="file-info-card">
+            <h3>File Information</h3>
+            <div class="file-details">
+                <div class="detail-item">
+                    <label>Original File</label>
+                    <span>{{ invoice.original_filename }}</span>
+                </div>
+                <div class="detail-item">
+                    <label>Processed</label>
+                    <span>{{ invoice.processed_at[:10] if invoice.processed_at else 'Unknown' }}</span>
+                </div>
+                <div class="detail-item">
+                    <label>Status</label>
+                    <span class="status-badge status-success">Processed</span>
+                </div>
+            </div>
+
+            <div class="file-actions">
+                {% if invoice.file_path %}
+                <a href="{{ url_for('download_file', filename=invoice.file_path) }}" class="btn btn-outline btn-full">
+                    <i class="fas fa-download"></i> Download Original
+                </a>
+                {% endif %}
+                <button class="btn btn-outline btn-full" onclick="downloadJSON('{{ invoice.id }}')">
+                    <i class="fas fa-file-code"></i> Download JSON
+                </button>
+            </div>
+        </div>
+
+        <div class="extraction-quality">
+            <h3>Extraction Quality</h3>
+            <div class="quality-metrics">
+                <div class="metric">
+                    <label>Invoice Number</label>
+                    <div class="quality-indicator {{ 'found' if invoice.invoice_number else 'missing' }}">
+                        {% if invoice.invoice_number %}
+                        <i class="fas fa-check"></i> Found
+                        {% else %}
+                        <i class="fas fa-times"></i> Missing
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="metric">
+                    <label>Date</label>
+                    <div class="quality-indicator {{ 'found' if invoice.date else 'missing' }}">
+                        {% if invoice.date %}
+                        <i class="fas fa-check"></i> Found
+                        {% else %}
+                        <i class="fas fa-times"></i> Missing
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="metric">
+                    <label>Vendor</label>
+                    <div class="quality-indicator {{ 'found' if invoice.vendor else 'missing' }}">
+                        {% if invoice.vendor %}
+                        <i class="fas fa-check"></i> Found
+                        {% else %}
+                        <i class="fas fa-times"></i> Missing
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="metric">
+                    <label>Total</label>
+                    <div class="quality-indicator {{ 'found' if invoice.total else 'missing' }}">
+                        {% if invoice.total %}
+                        <i class="fas fa-check"></i> Found
+                        {% else %}
+                        <i class="fas fa-times"></i> Missing
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="metric">
+                    <label>Line Items</label>
+                    <div class="quality-indicator {{ 'found' if invoice.line_items else 'missing' }}">
+                        {% if invoice.line_items %}
+                        <i class="fas fa-check"></i> {{ invoice.line_items|length }} Found
+                        {% else %}
+                        <i class="fas fa-times"></i> None Found
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="actions-card">
+            <h3>Actions</h3>
+            <div class="action-buttons">
+                <button class="btn btn-primary btn-full" onclick="editInvoice('{{ invoice.id }}')">
+                    <i class="fas fa-edit"></i> Edit Details
+                </button>
+                <button class="btn btn-outline btn-full" onclick="reprocessInvoice('{{ invoice.id }}')">
+                    <i class="fas fa-redo"></i> Reprocess
+                </button>
+                <button class="btn btn-danger btn-full" onclick="deleteInvoice('{{ invoice.id }}')">
+                    <i class="fas fa-trash"></i> Delete
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function pushToAccounting(invoiceId) {
+        const button = event.target.closest('button');
+        const originalText = button.innerHTML;
+        button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+        button.disabled = true;
+
+        fetch(`/api/invoices/${invoiceId}`)
+            .then(response => response.json())
+            .then(data => {
+                const accountingPayload = {
+                    invoice_id: invoiceId,
+                    invoice_number: data.invoice_number,
+                    date: data.date,
+                    vendor: data.vendor,
+                    product_name: data.product_name,
+                    amount: data.total,
+                    tax: data.tax,
+                    address: data.address,
+                    processed_at: new Date().toISOString(),
+                    accounting_entries: {
+                        debit: {
+                            account: "Accounts Receivable",
+                            amount: data.total
+                        },
+                        credit: {
+                            account: "Sales Revenue", 
+                            amount: data.total
+                        }
+                    },
+                    raw_data: data
+                };
+
+                // Reset button state
+                button.innerHTML = originalText;
+                button.disabled = false;
+
+                // Show JSON content modal
+                showAccountingJSONModal(accountingPayload, invoiceId);
+            })
+            .catch(error => {
+                showNotification('Error loading invoice data: ' + error.message, 'error');
+                button.innerHTML = originalText;
+                button.disabled = false;
+            });
+    }
+
+    function showAccountingJSONModal(payload, invoiceId) {
+        const modal = document.createElement('div');
+        modal.className = 'json-modal-overlay';
+        modal.innerHTML = `
+            <div class="json-modal">
+                <div class="json-modal-header">
+                    <h3><i class="fas fa-file-code"></i> Accounting JSON Data</h3>
+                    <button class="close-modal" onclick="closeJSONModal()">&times;</button>
+                </div>
+                <div class="json-modal-body">
+                    <div class="json-actions">
+                        <button class="btn btn-outline btn-sm" onclick="copyJSONToClipboard()">
+                            <i class="fas fa-copy"></i> Copy JSON
+                        </button>
+                        <button class="btn btn-outline btn-sm" onclick="downloadJSONFile('${invoiceId}')">
+                            <i class="fas fa-download"></i> Download JSON
+                        </button>
+                    </div>
+                    <pre class="json-content" id="jsonContent">${JSON.stringify(payload, null, 2)}</pre>
+                </div>
+                <div class="json-modal-footer">
+                    <button class="btn btn-outline" onclick="closeJSONModal()">Cancel</button>
+                    <button class="btn btn-primary" onclick="confirmPushToAccounting('${invoiceId}', this)">
+                        <i class="fas fa-paper-plane"></i> Confirm Push to Accounting
+                    </button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(modal);
+        
+        // Add modal styles if not already present
+        if (!document.getElementById('jsonModalStyles')) {
+            const styles = document.createElement('style');
+            styles.id = 'jsonModalStyles';
+            styles.textContent = `
+                .json-modal-overlay {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0, 0, 0, 0.5);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    z-index: 1000;
+                }
+                .json-modal {
+                    background: white;
+                    border-radius: 8px;
+                    width: 90%;
+                    max-width: 800px;
+                    max-height: 90vh;
+                    display: flex;
+                    flex-direction: column;
+                    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+                }
+                .json-modal-header {
+                    padding: 20px;
+                    border-bottom: 1px solid #e5e7eb;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+                .json-modal-header h3 {
+                    margin: 0;
+                    color: #1f2937;
+                }
+                .close-modal {
+                    background: none;
+                    border: none;
+                    font-size: 24px;
+                    cursor: pointer;
+                    color: #6b7280;
+                    padding: 0;
+                    width: 30px;
+                    height: 30px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+                .close-modal:hover {
+                    color: #374151;
+                }
+                .json-modal-body {
+                    padding: 20px;
+                    flex: 1;
+                    overflow: hidden;
+                    display: flex;
+                    flex-direction: column;
+                }
+                .json-actions {
+                    margin-bottom: 15px;
+                    display: flex;
+                    gap: 10px;
+                }
+                .json-content {
+                    background: #f8fafc;
+                    border: 1px solid #e5e7eb;
+                    border-radius: 6px;
+                    padding: 15px;
+                    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+                    font-size: 12px;
+                    line-height: 1.5;
+                    overflow: auto;
+                    flex: 1;
+                    white-space: pre-wrap;
+                    word-wrap: break-word;
+                }
+                .json-modal-footer {
+                    padding: 20px;
+                    border-top: 1px solid #e5e7eb;
+                    display: flex;
+                    justify-content: flex-end;
+                    gap: 10px;
+                }
+            `;
+            document.head.appendChild(styles);
+        }
+    }
+
+    function closeJSONModal() {
+        const modal = document.querySelector('.json-modal-overlay');
+        if (modal) {
+            modal.remove();
+        }
+    }
+
+    function copyJSONToClipboard() {
+        const jsonContent = document.getElementById('jsonContent');
+        if (jsonContent) {
+            navigator.clipboard.writeText(jsonContent.textContent).then(() => {
+                showNotification('JSON copied to clipboard!', 'success');
+            }).catch(() => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = jsonContent.textContent;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showNotification('JSON copied to clipboard!', 'success');
+            });
+        }
+    }
+
+    function downloadJSONFile(invoiceId) {
+        const jsonContent = document.getElementById('jsonContent');
+        if (jsonContent) {
+            const blob = new Blob([jsonContent.textContent], { type: 'application/json' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = `invoice_${invoiceId}_accounting.json`;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+            showNotification('JSON file downloaded!', 'success');
+        }
+    }
+
+    function confirmPushToAccounting(invoiceId, button) {
+        const originalText = button.innerHTML;
+        button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Pushing...';
+        button.disabled = true;
+
+        const jsonContent = document.getElementById('jsonContent');
+        const payload = JSON.parse(jsonContent.textContent);
+
+        fetch('/api/accounting/entries', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload)
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.success) {
+                showNotification(`Successfully pushed to accounting! Entry ID: ${result.entry_id}`, 'success');
+                closeJSONModal();
+                
+                // Update the main push button
+                const mainButton = document.querySelector('button[onclick*="pushToAccounting"]');
+                if (mainButton) {
+                    mainButton.innerHTML = '<i class="fas fa-check"></i> Pushed';
+                    mainButton.classList.remove('btn-primary');
+                    mainButton.classList.add('btn-success');
+                    mainButton.disabled = true;
+                }
+            } else {
+                showNotification('Failed to push to accounting: ' + result.message, 'error');
+                button.innerHTML = originalText;
+                button.disabled = false;
+            }
+        })
+        .catch(error => {
+            showNotification('Error: ' + error.message, 'error');
+            button.innerHTML = originalText;
+            button.disabled = false;
+        });
+    }
+
+    function downloadAccountingJSON(invoiceId) {
+        fetch(`/api/invoices/${invoiceId}/accounting-json`)
+            .then(response => response.blob())
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                a.download = `invoice_${invoiceId}_accounting.json`;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                showNotification('Accounting JSON downloaded!', 'success');
+            })
+            .catch(error => {
+                showNotification('Download failed: ' + error.message, 'error');
+            });
+    }
+
+    function downloadJSON(invoiceId) {
+        window.location.href = `/download/json/${invoiceId}`;
+    }
+
+    function editInvoice(invoiceId) {
+        alert('Edit functionality would be implemented here');
+    }
+
+    function reprocessInvoice(invoiceId) {
+        if (confirm('Are you sure you want to reprocess this invoice?')) {
+            alert('Reprocess functionality would be implemented here');
+        }
+    }
+
+    function deleteInvoice(invoiceId) {
+        if (confirm('Are you sure you want to delete this invoice?')) {
+            alert('Delete functionality would be implemented here');
+        }
+    }
+
+    function editLineItem(itemIndex) {
+        showNotification(`Edit functionality for item {itemIndex + 1} would be implemented here`, 'info');
+    }
+
+    function showNotification(message, type = 'info') {
+        const notification = document.createElement('div');
+        notification.className = `flash-message flash-${type}`;
+        notification.innerHTML = `
+            <span>${message}</span>
+            <button class="close-flash" onclick="this.parentElement.remove()">×</button>
+        `;
+        
+        let flashContainer = document.querySelector('.flash-messages');
+        if (!flashContainer) {
+            flashContainer = document.createElement('div');
+            flashContainer.className = 'flash-messages';
+            document.querySelector('.content').prepend(flashContainer);
+        }
+        
+        flashContainer.appendChild(notification);
+        
+        setTimeout(() => {
+            if (notification.parentElement) {
+                notification.remove();
+            }
+        }, 5000);
+    }
+</script>
+{% endblock %}

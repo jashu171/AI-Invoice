@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Line Items Preview</title>
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="content">
+        <h2>Updated Line Items Display</h2>
+        <div class="invoice-main">
+            <div class="item-details">
+                <h3>File Details</h3>
+                <p class="subtitle">Files uploaded with extracted line items</p>
+
+                <table class="items-table">
+                    <thead>
+                        <tr>
+                            <th>INVOICE #</th>
+                            <th>VENDOR</th>
+                            <th>DATE</th>
+                            <th>TOTAL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-invoice-id="sample_1" class="invoice-row" style="cursor: pointer;">
+                            <td>INV-ABC123</td>
+                            <td>Sample Vendor Inc</td>
+                            <td>2024-01-11</td>
+                            <td>₹1999.00</td>
+                        </tr>
+                        <tr class="line-items-header">
+                            <td colspan="4">
+                                <div class="line-items-section">
+                                    <h4>📋 Line Items</h4>
+                                    <table class="line-items-table">
+                                        <thead>
+                                            <tr>
+                                                <th>TYPE</th>
+                                                <th>QTY</th>
+                                                <th>DESCRIPTION</th>
+                                                <th>UNIT PRICE</th>
+                                                <th>AMOUNT</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="line-item-product">
+                                                <td><span class="item-type-badge item-type-product">Product</span></td>
+                                                <td>1</td>
+                                                <td class="item-description">
+                                                    CMF by Nothing Buds 42 dB Active Noise Cancellation
+                                                    <small class="product-code">Code: ACCGXX62ATGFSZG8</small>
+                                                </td>
+                                                <td>₹1694.06</td>
+                                                <td class="item-amount">₹1694.06</td>
+                                            </tr>
+                                            <tr class="line-item-service">
+                                                <td><span class="item-type-badge item-type-service">Service</span></td>
+                                                <td>1</td>
+                                                <td class="item-description">Shipping And Handling Charges</td>
+                                                <td>₹70.00</td>
+                                                <td class="item-amount">₹0.00</td>
+                                            </tr>
+                                            <tr class="line-item-tax">
+                                                <td><span class="item-type-badge item-type-tax">Tax</span></td>
+                                                <td>1</td>
+                                                <td class="item-description">SGST/UTGST (9%)</td>
+                                                <td>-</td>
+                                                <td class="item-amount">₹152.47</td>
+                                            </tr>
+                                            <tr class="line-item-tax">
+                                                <td><span class="item-type-badge item-type-tax">Tax</span></td>
+                                                <td>1</td>
+                                                <td class="item-description">CGST (9%)</td>
+                                                <td>-</td>
+                                                <td class="item-amount">₹152.47</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                        
+                        <tr data-invoice-id="sample_2" class="invoice-row" style="cursor: pointer;">
+                            <td>INV-XYZ789</td>
+                            <td>Another Vendor LLC</td>
+                            <td>2024-01-12</td>
+                            <td>₹13.00</td>
+                        </tr>
+                        <tr class="line-items-header">
+                            <td colspan="4">
+                                <div class="line-items-section">
+                                    <h4>📋 Line Items</h4>
+                                    <table class="line-items-table">
+                                        <thead>
+                                            <tr>
+                                                <th>TYPE</th>
+                                                <th>QTY</th>
+                                                <th>DESCRIPTION</th>
+                                                <th>UNIT PRICE</th>
+                                                <th>AMOUNT</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="line-item-service">
+                                                <td><span class="item-type-badge item-type-service">Service</span></td>
+                                                <td>1</td>
+                                                <td class="item-description">Platform Fee</td>
+                                                <td>₹3.00</td>
+                                                <td class="item-amount">₹3.00</td>
+                                            </tr>
+                                            <tr class="line-item-service">
+                                                <td><span class="item-type-badge item-type-service">Service</span></td>
+                                                <td>1</td>
+                                                <td class="item-description">Payment Handling Charges</td>
+                                                <td>₹10.00</td>
+                                                <td class="item-amount">₹10.00</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

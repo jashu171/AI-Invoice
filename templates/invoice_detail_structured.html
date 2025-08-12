@@ -1,0 +1,498 @@
+{% extends "base.html" %}
+
+{% block page_title %}Invoice Details: {{ invoice.invoice_number or 'N/A' }}{% endblock %}
+
+{% block content %}
+<div class="structured-invoice-layout">
+    <!-- Header Actions -->
+    <div class="invoice-header">
+        <div class="header-actions">
+            <a href="{{ url_for('index') }}" class="btn btn-outline">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </a>
+            <button class="btn btn-primary" onclick="pushToAccounting('{{ invoice.id }}')">
+                <i class="fas fa-paper-plane"></i> Push to Accounting
+            </button>
+            <button class="btn btn-outline" onclick="downloadJSON('{{ invoice.id }}')">
+                <i class="fas fa-file-code"></i> Export JSON
+            </button>
+        </div>
+    </div>
+
+    <!-- Extraction Method Badge -->
+    {% if invoice.structured_data and invoice.structured_data.extraction_metadata %}
+    <div class="extraction-badge">
+        <span class="badge badge-{{ 'success' if invoice.structured_data.extraction_metadata.method == 'gemini_ai' else 'warning' }}">
+            <i class="fas fa-{{ 'robot' if invoice.structured_data.extraction_metadata.method == 'gemini_ai' else 'code' }}"></i>
+            {{ 'AI Extracted' if invoice.structured_data.extraction_metadata.method == 'gemini_ai' else 'Regex Extracted' }}
+            {% if invoice.structured_data.extraction_metadata.confidence_score %}
+            ({{ (invoice.structured_data.extraction_metadata.confidence_score * 100)|round }}% confidence)
+            {% endif %}
+        </span>
+    </div>
+    {% endif %}
+
+    <!-- Main Content Grid -->
+    <div class="structured-content-grid">
+        <!-- Invoice Metadata Section -->
+        <div class="data-section" id="invoice-metadata">
+            <div class="section-header">
+                <h3><i class="fas fa-file-invoice"></i> Invoice Metadata</h3>
+                <button class="btn btn-sm btn-outline edit-section-btn" onclick="editSection('invoice-metadata')">
+                    <i class="fas fa-edit"></i> Edit
+                </button>
+            </div>
+            <div class="section-content">
+                {% set metadata = invoice.structured_data.invoice_metadata if invoice.structured_data else {} %}
+                <div class="data-grid">
+                    <div class="data-item">
+                        <label>Invoice Number</label>
+                        <span class="value">{{ metadata.invoice_number or invoice.invoice_number or 'Not Found' }}</span>
+                    </div>
+                    <div class="data-item">
+                        <label>Invoice Date</label>
+                        <span class="value">{{ metadata.invoice_date or invoice.date or 'Not Found' }}</span>
+                    </div>
+                    <div class="data-item">
+                        <label>Due Date</label>
+                        <span class="value">{{ metadata.due_date or 'Not Found' }}</span>
+                    </div>
+                    <div class="data-item">
+                        <label>PO Number</label>
+                        <span class="value">{{ metadata.po_number or 'Not Found' }}</span>
+                    </div>
+                    <div class="data-item">
+                        <label>Currency</label>
+                        <span class="value">{{ metadata.currency or 'USD' }}</span>
+                    </div>
+                    <div class="data-item">
+                        <label>Language</label>
+                        <span class="value">{{ metadata.language or 'en' }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vendor Details Section -->
+        <div class="data-section" id="vendor-details">
+            <div class="section-header">
+                <h3><i class="fas fa-building"></i> Vendor Details</h3>
+                <button class="btn btn-sm btn-outline edit-section-btn" onclick="editSection('vendor-details')">
+                    <i class="fas fa-edit"></i> Edit
+                </button>
+            </div>
+            <div class="section-content">
+                {% set vendor = invoice.structured_data.vendor_details if invoice.structured_data else {} %}
+                <div class="data-grid">
+                    <div class="data-item full-width">
+                        <label>Company Name</label>
+                        <span class="value">{{ vendor.name or invoice.vendor or 'Not Found' }}</span>
+                    </div>
+                    {% if vendor.address %}
+                    <div class="data-item full-width">
+                        <label>Address</label>
+                        <div class="address-block">
+                            {% if vendor.address.street %}<div>{{ vendor.address.street }}</div>{% endif %}
+                            <div>
+                                {% if vendor.address.city %}{{ vendor.address.city }}{% endif %}
+                                {% if vendor.address.state %}, {{ vendor.address.state }}{% endif %}
+                                {% if vendor.address.postal_code %} {{ vendor.address.postal_code }}{% endif %}
+                            </div>
+                            {% if vendor.address.country %}<div>{{ vendor.address.country }}</div>{% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if vendor.contact %}
+                    <div class="data-item">
+                        <label>Phone</label>
+                        <span class="value">{{ vendor.contact.phone or 'Not Found' }}</span>
+                    </div>
+                    <div class="data-item">
+                        <label>Email</label>
+                        <span class="value">{{ vendor.contact.email or 'Not Found' }}</span>
+                    </div>
+                    <div class="data-item">
+                        <label>Website</label>
+                        <span class="value">{{ vendor.contact.website or 'Not Found' }}</span>
+                    </div>
+                    {% endif %}
+                    <div class="data-item">
+                        <label>Tax ID</label>
+                        <span class="value">{{ vendor.tax_id or 'Not Found' }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Customer Details Section -->
+        {% if invoice.structured_data and invoice.structured_data.customer_details and invoice.structured_data.customer_details.name %}
+        <div class="data-section" id="customer-details">
+            <div class="section-header">
+                <h3><i class="fas fa-user-tie"></i> Customer Details</h3>
+                <button class="btn btn-sm btn-outline edit-section-btn" onclick="editSection('customer-details')">
+                    <i class="fas fa-edit"></i> Edit
+                </button>
+            </div>
+            <div class="section-content">
+                {% set customer = invoice.structured_data.customer_details %}
+                <div class="data-grid">
+                    <div class="data-item full-width">
+                        <label>Customer Name</label>
+                        <span class="value">{{ customer.name }}</span>
+                    </div>
+                    {% if customer.address and customer.address.street %}
+                    <div class="data-item full-width">
+                        <label>Address</label>
+                        <div class="address-block">
+                            <div>{{ customer.address.street }}</div>
+                            <div>
+                                {% if customer.address.city %}{{ customer.address.city }}{% endif %}
+                                {% if customer.address.state %}, {{ customer.address.state }}{% endif %}
+                                {% if customer.address.postal_code %} {{ customer.address.postal_code }}{% endif %}
+                            </div>
+                            {% if customer.address.country %}<div>{{ customer.address.country }}</div>{% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if customer.contact %}
+                    <div class="data-item">
+                        <label>Phone</label>
+                        <span class="value">{{ customer.contact.phone or 'Not Found' }}</span>
+                    </div>
+                    <div class="data-item">
+                        <label>Email</label>
+                        <span class="value">{{ customer.contact.email or 'Not Found' }}</span>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endif %}     
+   <!-- Line Items Section -->
+        <div class="data-section full-width" id="line-items">
+            <div class="section-header">
+                <h3><i class="fas fa-list"></i> Line Items</h3>
+                <div class="section-actions">
+                    <button class="btn btn-sm btn-outline" onclick="addLineItem()">
+                        <i class="fas fa-plus"></i> Add Item
+                    </button>
+                    <button class="btn btn-sm btn-outline edit-section-btn" onclick="editSection('line-items')">
+                        <i class="fas fa-edit"></i> Edit All
+                    </button>
+                </div>
+            </div>
+            <div class="section-content">
+                {% set line_items = invoice.structured_data.line_items if invoice.structured_data else invoice.line_items %}
+                {% if line_items %}
+                <div class="line-items-table-container">
+                    <table class="line-items-table">
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th>Quantity</th>
+                                <th>Unit Price</th>
+                                <th>Subtotal</th>
+                                <th>Tax Rate</th>
+                                <th>Tax Amount</th>
+                                <th>Total</th>
+                                <th>Category</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in line_items %}
+                            <tr class="line-item-row" data-item-index="{{ loop.index0 }}">
+                                <td class="description-cell">{{ item.description or 'No description' }}</td>
+                                <td class="quantity-cell">{{ item.quantity or 1 }}</td>
+                                <td class="unit-price-cell">
+                                    {% if item.unit_price %}
+                                        ₹{{ "%.2f"|format(item.unit_price) }}
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                </td>
+                                <td class="subtotal-cell">
+                                    ₹{{ "%.2f"|format(item.subtotal or item.amount or 0) }}
+                                </td>
+                                <td class="tax-rate-cell">
+                                    {% if item.tax_rate %}
+                                        {{ "%.1f"|format(item.tax_rate * 100) }}%
+                                    {% else %}
+                                        0%
+                                    {% endif %}
+                                </td>
+                                <td class="tax-amount-cell">
+                                    ₹{{ "%.2f"|format(item.tax_amount or 0) }}
+                                </td>
+                                <td class="total-cell">
+                                    <strong>₹{{ "%.2f"|format(item.total or item.amount or 0) }}</strong>
+                                </td>
+                                <td class="category-cell">
+                                    <span class="category-badge category-{{ item.category or item.item_type or 'other' }}">
+                                        {{ (item.category or item.item_type or 'other')|title }}
+                                    </span>
+                                </td>
+                                <td class="actions-cell">
+                                    <button class="btn btn-xs btn-outline" onclick="editLineItem({ loop.index0 })">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-xs btn-outline" onclick="deleteLineItem({ loop.index0 })">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="no-data">
+                    <i class="fas fa-inbox"></i>
+                    <p>No line items found</p>
+                    <button class="btn btn-primary" onclick="addLineItem()">
+                        <i class="fas fa-plus"></i> Add First Item
+                    </button>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Summary Section -->
+        <div class="data-section" id="summary">
+            <div class="section-header">
+                <h3><i class="fas fa-calculator"></i> Summary & Totals</h3>
+                <button class="btn btn-sm btn-outline edit-section-btn" onclick="editSection('summary')">
+                    <i class="fas fa-edit"></i> Edit
+                </button>
+            </div>
+            <div class="section-content">
+                {% set summary = invoice.structured_data.summary if invoice.structured_data else {} %}
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <label>Subtotal</label>
+                        <span class="value">₹{{ "%.2f"|format(summary.subtotal or 0) }}</span>
+                    </div>
+                    <div class="summary-item">
+                        <label>Total Tax</label>
+                        <span class="value">₹{{ "%.2f"|format(summary.total_tax or 0) }}</span>
+                    </div>
+                    <div class="summary-item">
+                        <label>Discounts</label>
+                        <span class="value">₹{{ "%.2f"|format(summary.discounts or 0) }}</span>
+                    </div>
+                    <div class="summary-item">
+                        <label>Shipping</label>
+                        <span class="value">₹{{ "%.2f"|format(summary.shipping or 0) }}</span>
+                    </div>
+                    <div class="summary-item grand-total">
+                        <label>Grand Total</label>
+                        <span class="value">₹{{ "%.2f"|format(summary.grand_total or invoice.total or 0) }}</span>
+                    </div>
+                </div>
+
+                <!-- Tax Breakdown -->
+                {% if summary.tax_breakdown %}
+                <div class="tax-breakdown">
+                    <h4>Tax Breakdown</h4>
+                    <div class="tax-items">
+                        {% for tax in summary.tax_breakdown %}
+                        <div class="tax-item">
+                            <span class="tax-type">{{ tax.tax_type }}</span>
+                            <span class="tax-rate">{{ "%.1f"|format(tax.rate * 100) }}%</span>
+                            <span class="tax-amount">₹{{ "%.2f"|format(tax.amount) }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Payment Terms Section -->
+        {% if invoice.structured_data and invoice.structured_data.payment_terms and (invoice.structured_data.payment_terms.terms or invoice.structured_data.payment_terms.payment_methods) %}
+        <div class="data-section" id="payment-terms">
+            <div class="section-header">
+                <h3><i class="fas fa-credit-card"></i> Payment Terms</h3>
+                <button class="btn btn-sm btn-outline edit-section-btn" onclick="editSection('payment-terms')">
+                    <i class="fas fa-edit"></i> Edit
+                </button>
+            </div>
+            <div class="section-content">
+                {% set payment = invoice.structured_data.payment_terms %}
+                <div class="data-grid">
+                    <div class="data-item">
+                        <label>Payment Terms</label>
+                        <span class="value">{{ payment.terms or 'Not specified' }}</span>
+                    </div>
+                    {% if payment.payment_methods %}
+                    <div class="data-item">
+                        <label>Payment Methods</label>
+                        <div class="payment-methods">
+                            {% for method in payment.payment_methods %}
+                            <span class="payment-method-badge">{{ method }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if payment.bank_details and (payment.bank_details.account_name or payment.bank_details.account_number) %}
+                    <div class="data-item full-width">
+                        <label>Bank Details</label>
+                        <div class="bank-details">
+                            {% if payment.bank_details.account_name %}<div><strong>Account Name:</strong> {{ payment.bank_details.account_name }}</div>{% endif %}
+                            {% if payment.bank_details.account_number %}<div><strong>Account Number:</strong> {{ payment.bank_details.account_number }}</div>{% endif %}
+                            {% if payment.bank_details.routing_number %}<div><strong>Routing Number:</strong> {{ payment.bank_details.routing_number }}</div>{% endif %}
+                            {% if payment.bank_details.iban %}<div><strong>IBAN:</strong> {{ payment.bank_details.iban }}</div>{% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Additional Information Section -->
+        {% if invoice.structured_data and invoice.structured_data.additional_info and (invoice.structured_data.additional_info.notes or invoice.structured_data.additional_info.terms_conditions or invoice.structured_data.additional_info.reference_numbers) %}
+        <div class="data-section full-width" id="additional-info">
+            <div class="section-header">
+                <h3><i class="fas fa-info-circle"></i> Additional Information</h3>
+                <button class="btn btn-sm btn-outline edit-section-btn" onclick="editSection('additional-info')">
+                    <i class="fas fa-edit"></i> Edit
+                </button>
+            </div>
+            <div class="section-content">
+                {% set additional = invoice.structured_data.additional_info %}
+                <div class="data-grid">
+                    {% if additional.notes %}
+                    <div class="data-item full-width">
+                        <label>Notes</label>
+                        <div class="notes-content">{{ additional.notes }}</div>
+                    </div>
+                    {% endif %}
+                    {% if additional.terms_conditions %}
+                    <div class="data-item full-width">
+                        <label>Terms & Conditions</label>
+                        <div class="terms-content">{{ additional.terms_conditions }}</div>
+                    </div>
+                    {% endif %}
+                    {% if additional.reference_numbers %}
+                    <div class="data-item">
+                        <label>Reference Numbers</label>
+                        <div class="reference-numbers">
+                            {% for ref in additional.reference_numbers %}
+                            <span class="reference-badge">{{ ref }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Sidebar -->
+    <div class="structured-sidebar">
+        <!-- File Information -->
+        <div class="sidebar-card">
+            <h4>File Information</h4>
+            <div class="file-details">
+                <div class="detail-item">
+                    <label>Original File</label>
+                    <span>{{ invoice.original_filename }}</span>
+                </div>
+                <div class="detail-item">
+                    <label>Processed</label>
+                    <span>{{ invoice.processed_at[:10] if invoice.processed_at else 'Unknown' }}</span>
+                </div>
+                <div class="detail-item">
+                    <label>Extraction Method</label>
+                    <span class="extraction-method">
+                        {% if invoice.structured_data and invoice.structured_data.extraction_metadata %}
+                            {{ invoice.structured_data.extraction_metadata.method|title|replace('_', ' ') }}
+                        {% else %}
+                            {{ invoice.extraction_method|default('Unknown')|title|replace('_', ' ') }}
+                        {% endif %}
+                    </span>
+                </div>
+                {% if invoice.structured_data and invoice.structured_data.extraction_metadata and invoice.structured_data.extraction_metadata.processing_time %}
+                <div class="detail-item">
+                    <label>Processing Time</label>
+                    <span>{{ "%.2f"|format(invoice.structured_data.extraction_metadata.processing_time) }}s</span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Data Quality -->
+        <div class="sidebar-card">
+            <h4>Data Quality</h4>
+            <div class="quality-metrics">
+                {% set metadata = invoice.structured_data.invoice_metadata if invoice.structured_data else {} %}
+                {% set vendor = invoice.structured_data.vendor_details if invoice.structured_data else {} %}
+                {% set line_items = invoice.structured_data.line_items if invoice.structured_data else invoice.line_items %}
+                {% set summary = invoice.structured_data.summary if invoice.structured_data else {} %}
+                
+                <div class="metric">
+                    <label>Invoice Number</label>
+                    <div class="quality-indicator {{ 'found' if (metadata.invoice_number or invoice.invoice_number) else 'missing' }}">
+                        <i class="fas fa-{{ 'check' if (metadata.invoice_number or invoice.invoice_number) else 'times' }}"></i>
+                        {{ 'Found' if (metadata.invoice_number or invoice.invoice_number) else 'Missing' }}
+                    </div>
+                </div>
+                <div class="metric">
+                    <label>Date</label>
+                    <div class="quality-indicator {{ 'found' if (metadata.invoice_date or invoice.date) else 'missing' }}">
+                        <i class="fas fa-{{ 'check' if (metadata.invoice_date or invoice.date) else 'times' }}"></i>
+                        {{ 'Found' if (metadata.invoice_date or invoice.date) else 'Missing' }}
+                    </div>
+                </div>
+                <div class="metric">
+                    <label>Vendor</label>
+                    <div class="quality-indicator {{ 'found' if (vendor.name or invoice.vendor) else 'missing' }}">
+                        <i class="fas fa-{{ 'check' if (vendor.name or invoice.vendor) else 'times' }}"></i>
+                        {{ 'Found' if (vendor.name or invoice.vendor) else 'Missing' }}
+                    </div>
+                </div>
+                <div class="metric">
+                    <label>Total</label>
+                    <div class="quality-indicator {{ 'found' if (summary.grand_total or invoice.total) else 'missing' }}">
+                        <i class="fas fa-{{ 'check' if (summary.grand_total or invoice.total) else 'times' }}"></i>
+                        {{ 'Found' if (summary.grand_total or invoice.total) else 'Missing' }}
+                    </div>
+                </div>
+                <div class="metric">
+                    <label>Line Items</label>
+                    <div class="quality-indicator {{ 'found' if line_items else 'missing' }}">
+                        <i class="fas fa-{{ 'check' if line_items else 'times' }}"></i>
+                        {{ line_items|length if line_items else 0 }} Items
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="sidebar-card">
+            <h4>Actions</h4>
+            <div class="action-buttons">
+                {% if invoice.file_path %}
+                <a href="{{ url_for('download_file', filename=invoice.file_path) }}" class="btn btn-outline btn-full">
+                    <i class="fas fa-download"></i> Download Original
+                </a>
+                {% endif %}
+                <button class="btn btn-outline btn-full" onclick="downloadJSON('{{ invoice.id }}')">
+                    <i class="fas fa-file-code"></i> Download JSON
+                </button>
+                <button class="btn btn-primary btn-full" onclick="reprocessWithAI('{{ invoice.id }}')">
+                    <i class="fas fa-robot"></i> Reprocess with AI
+                </button>
+                <button class="btn btn-danger btn-full" onclick="deleteInvoice('{{ invoice.id }}')">
+                    <i class="fas fa-trash"></i> Delete Invoice
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Include structured invoice JavaScript -->
+<script src="{{ url_for('static', filename='js/structured_invoice.js') }}"></script>
+{% endblock %}

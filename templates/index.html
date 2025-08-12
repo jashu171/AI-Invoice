@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block page_title %}Welcome to the AI Generated Invoice {% endblock %}
+
+{% block content %}
+<div class="upload-section">
+    <div class="upload-card">
+        <div class="upload-header">
+            <h2>Upload Invoice</h2>
+            <p>Upload invoice PDFs or images for automatic data extraction</p>
+        </div>
+
+        <form action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data" class="upload-form" id="uploadForm">
+            <div class="file-upload-area" id="fileUploadArea">
+                <div class="upload-icon">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                </div>
+                <div class="upload-text">
+                    <h3>Drag and drop files here</h3>
+                    <p>or <span class="browse-link">browse files</span></p>
+                    <small>Supports: PDF, PNG, JPG, JPEG, GIF (Max 16MB)</small>
+                </div>
+                <input type="file" name="file" id="fileInput" accept=".pdf,.png,.jpg,.jpeg,.gif,.bmp,.tiff,.webp"
+                    multiple>
+            </div>
+
+            <div class="upload-actions">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-upload"></i>
+                    Upload Files
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% if invoices %}
+<div class="invoices-section">
+    <div class="invoices-header">
+        <h2>Processed Invoices</h2>
+        <div class="invoices-count">{{ invoices|length }} invoice(s)</div>
+    </div>
+
+    <div class="invoices-grid">
+        {% for invoice in invoices %}
+        <div class="invoice-card" data-invoice-id="{{ invoice.id }}">
+            <div class="invoice-icon">
+                <i class="fas fa-file-invoice-dollar"></i>
+            </div>
+            <div class="invoice-info">
+                <h4 class="invoice-number">{{ invoice.invoice_number or 'No Invoice #' }}</h4>
+                <p class="vendor-name">{{ invoice.vendor or 'Unknown Vendor' }}</p>
+                <p class="invoice-details">
+                    <span class="date">{{ invoice.date or 'No Date' }}</span>
+                    {% if invoice.total %}
+                    • <span class="total">₹{{ invoice.total }}</span>
+                    {% endif %}
+                </p>
+                <p class="file-info">
+                    <small>{{ invoice.original_filename }} • {{ invoice.line_items_count }} items</small>
+                </p>
+                <p class="processed-date">Processed: {{ invoice.processed }}</p>
+            </div>
+            <div class="invoice-actions">
+                <a href="{{ url_for('view_invoice', invoice_id=invoice.id) }}" class="btn btn-sm btn-primary">
+                    <i class="fas fa-eye"></i> View
+                </a>
+                <button class="btn btn-sm btn-outline" onclick="pushToAccounting('{{ invoice.id }}')">
+                    <i class="fas fa-paper-plane"></i> Push
+                </button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+<div class="stats-section">
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-file-invoice"></i>
+            </div>
+            <div class="stat-info">
+                <h3>{{ invoices|length if invoices else 0 }}</h3>
+                <p>Total Invoices</p>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-dollar-sign"></i>
+            </div>
+            <div class="stat-info">
+                <h3>₹{{ "%.2f"|format(invoices|selectattr('total')|map(attribute='total')|map('float')|sum) if invoices
+                    else "0.00" }}</h3>
+                <p>Total Amount</p>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-building"></i>
+            </div>
+            <div class="stat-info">
+                <h3>{{ invoices|selectattr('vendor')|map(attribute='vendor')|unique|list|length if invoices else 0 }}
+                </h3>
+                <p>Unique Vendors</p>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-list"></i>
+            </div>
+            <div class="stat-info">
+                <h3>{{ invoices|sum(attribute='line_items_count') if invoices else 0 }}</h3>
+                <p>Line Items</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

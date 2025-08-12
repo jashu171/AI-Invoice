@@ -1,0 +1,134 @@
+{
+  "invoice_number": "FAJ42M2500305640",
+  "date": "2024-11-01",
+  "vendor": "BTPL Distribution Private Limited",
+  "total": "2178.91",
+  "line_items": [
+    {
+      "description": "True Wireless\nFSN: \nACCGXX62ATGFSZG8\nHSN/SAC: 85183090CMF by Nothing Buds 42 \ndB Active Noise \nCancellation, Ultra Bass \nTechnology, 35.5 Hrs \nplaytime Bluetooth\nWarranty: 1 Year Warranty",
+      "quantity": 1,
+      "unit_price": 1999.0,
+      "amount": 2178.91,
+      "item_type": "product",
+      "formatted_amount": "\u20b92178.91",
+      "formatted_quantity": "1"
+    },
+    {
+      "description": "Shipping And Handling Charges",
+      "quantity": 1,
+      "unit_price": 70.0,
+      "amount": 70.0,
+      "item_type": "other",
+      "formatted_amount": "\u20b970.00",
+      "formatted_quantity": "1"
+    }
+  ],
+  "processed_at": "2025-08-13T00:15:36.189268",
+  "extraction_method": "gemini_ai",
+  "structured_data": {
+    "extraction_metadata": {
+      "method": "gemini_ai",
+      "model": "gemini-2.0-flash",
+      "confidence_score": 0.9,
+      "processing_time": 7.608386993408203,
+      "fallback_used": false,
+      "extracted_at": "2025-08-13T00:15:36.189268",
+      "errors": []
+    },
+    "invoice_metadata": {
+      "invoice_number": "FAJ42M2500305640",
+      "invoice_date": "2024-11-01",
+      "due_date": null,
+      "po_number": "OD332724074892081100",
+      "currency": "INR",
+      "language": null
+    },
+    "vendor_details": {
+      "name": "BTPL Distribution Private Limited",
+      "address": {
+        "street": "Sy no 696, Gundlapochampally Village, Medchal Mandal, Ranga Reddy Dist",
+        "city": "Secundrabad",
+        "state": "Telangana",
+        "postal_code": "501401",
+        "country": "India"
+      },
+      "contact": {
+        "phone": "044 - 66904500",
+        "email": null,
+        "website": "www.flipkart.com/helpcentre"
+      },
+      "tax_id": "36AABCN1929K1ZC",
+      "registration_number": null
+    },
+    "customer_details": {
+      "name": "Venu Arelli",
+      "address": {
+        "street": "1-25-14/1, , Gollaguda, Thirumalgiri, Secunderabad.",
+        "city": "Hyderabad",
+        "state": "Telangana",
+        "postal_code": "500015",
+        "country": null
+      },
+      "contact": {
+        "phone": "xxxxxxxxxx",
+        "email": null,
+        "website": null
+      },
+      "customer_id": null
+    },
+    "line_items": [
+      {
+        "item_id": null,
+        "description": "True Wireless\nFSN: \nACCGXX62ATGFSZG8\nHSN/SAC: 85183090CMF by Nothing Buds 42 \ndB Active Noise \nCancellation, Ultra Bass \nTechnology, 35.5 Hrs \nplaytime Bluetooth\nWarranty: 1 Year Warranty",
+        "quantity": 1,
+        "unit_price": 1999.0,
+        "unit_type": null,
+        "subtotal": 1999.0,
+        "tax_rate": 0.09,
+        "tax_amount": 179.91,
+        "total": 2178.91,
+        "category": "product"
+      },
+      {
+        "item_id": null,
+        "description": "Shipping And Handling Charges",
+        "quantity": 1,
+        "unit_price": 70.0,
+        "unit_type": null,
+        "subtotal": 70.0,
+        "tax_rate": 0.0,
+        "tax_amount": 0.0,
+        "total": 70.0,
+        "category": "other"
+      }
+    ],
+    "summary": {
+      "subtotal": 2069.0,
+      "tax_breakdown": [],
+      "total_tax": 179.91,
+      "discounts": 70.0,
+      "shipping": 0.0,
+      "grand_total": 2178.91
+    },
+    "payment_terms": {
+      "terms": null,
+      "payment_methods": [],
+      "bank_details": {
+        "account_name": null,
+        "account_number": null,
+        "routing_number": null,
+        "iban": null,
+        "swift_code": null
+      }
+    },
+    "additional_info": {
+      "notes": "At Flipkart we try to deliver perfectly each and every time. But in the off-chance that you need to return the item, please do so with the Returns Policy original Brand box/price \n without which it will be really difficult for us to act on your request. Please help us in helping you. Terms and conditions apply. tag, original packing and invoice\nThe goods sold as are intended for end user consumption and not for re-sale.",
+      "terms_conditions": null,
+      "reference_numbers": []
+    }
+  },
+  "raw_text": "E. & O.E. page 1 of 1\n*Keep this invoice and \nmanufacturer box for \nwarranty purposes.Ship To\nVenu Arelli \n1-25-14/1, , Gollaguda, \nThirumalgiri, Secunderabad.\nHyderabad 500015 Telangana \nPhone: xxxxxxxxxx Bill To\nVenu Arelli \n1-25-14/1, , Gollaguda, \nThirumalgiri, Secunderabad.\nHyderabad 500015 Telangana \nPhone: xxxxxxxxxx Order ID: \nOD332724074892081100\n 31-10-2024 Order Date:\n 01-11-2024 Invoice Date:\n AABCN1929K PAN:\nInvoice Number # FAJ42M2500305640Tax Invoice\nSold By:  BTPL Distribution Private Limited ,\nShip-from Address:  Sy no 696, Gundlapochampally Village, Medchal Mandal, Ranga Reddy Dist , Secundrabad, Telangana 501401, \nSecundrabad , Telangana, India - 501401, IN-TS ,\nGSTIN  - 36AABCN1929K1ZC\nTotal items: 1\nProduct Title Qty Gross\nAmount \u20b9Discounts\n/Coupons \u20b9Taxable\nValue \u20b9CGST \n\u20b9SGST\n/UTGST \n\u20b9Total \u20b9\nTrue Wireless\nFSN: \nACCGXX62ATGFSZG8\nHSN/SAC: 85183090CMF by Nothing Buds 42 \ndB Active Noise \nCancellation, Ultra Bass \nTechnology, 35.5 Hrs \nplaytime Bluetooth\nWarranty: 1 Year Warranty\n 9.0 % CGST:\n 9.0 % SGST/UTGST:1 1999.00 0.00 1694.06 152.47 152.47 1999.00\nShipping And Handling Charges 1 70.00 -70.00 0.00 0.00 0.00 0.00\nTotal 1 2069.00 -70.00 1694.06 152.47 152.47 1999.00\nGrand Total \u20b9 1999.00\nBTPL Distribution Private Limited\nSignature\nAuthorized Signatory\n: At Flipkart we try to deliver perfectly each and every time. But in the off-chance that you need to return the item, please do so with the Returns Policy original Brand box/price \n without which it will be really difficult for us to act on your request. Please help us in helping you. Terms and conditions apply. tag, original packing and invoice\nThe goods sold as are intended for end user consumption and not for re-sale.\nRegd. office:  , First Floor, Cabin No. 7 Plot No. 8D, Ragamalika Towers, Viswas Nagar, Maduravoyal, Chennai, Tamil Nadu - 600095 BTPL Distribution Private Limited\nContact Flipkart: 044 - 66904500 || www.flipkart.com/helpcentreE. & O.E. page 1 of 1\nBilling Address\nVenu Arelli \n1-25-14/1, , Gollaguda, Thirumalgiri, \nSecunderabad, \nHyderabad 500015 Telangana \nPhone: xxxxxxxxxx Order ID: OD332724074892081100\n 31-10-2024 Order Date:\n 01-11-2024 Invoice Date:\nInvoice Number # BFF8225002423640Tax Invoice\nSold By:  Flipkart Internet Private Limited ,\nShip-from Address:  Buildings Alyssa, Begonia & Clover, Embassy Tech Village, Outer Ring Road, Devarabeesanahalli Village, \nBengaluru, Bengaluru, Karnataka, IN - 560103, CIN: U51109KA2012PTC066107\nGSTIN  - 29AACCF0683K1ZD\nDescription Qty Gross\nAmount \u20b9Discount Taxable\nvalue \u20b9IGST \n\u20b9Total \u20b9\nSAC: 998599 Platform Fee\n 18.0 % IGST:1 3.00 0.00 2.54 0.46 3.00\nSAC: 998599 Payment Handling Charges\n 18.0 % IGST:1 10.00 0.00 8.47 1.53 10.00\nTotal 2 13.00 0.00 11.01 1.99 13.00\nGrand Total \u20b9 13.00\nFlipkart Internet Private Limited\nSignature\nAuthorized Signatory\nRegd. office:  , Buildings Alyssa, Begonia & Clover, Embassy Tech Village, Outer Ring Road, Devarabeesanahalli Village, Bengaluru, Bengaluru, Karnataka - Flipkart Internet Private Limited\n560103 CIN: U51109KA2012PTC066107\nContact Flipkart: 044 - 66904500 || www.flipkart.com/helpcentre",
+  "original_filename": "SampleInvoice.pdf",
+  "file_path": "SampleInvoice_4155ceef.pdf",
+  "processed_filename": "SampleInvoice_9743d426.json"
+}
